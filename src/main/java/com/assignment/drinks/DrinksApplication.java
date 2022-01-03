@@ -18,17 +18,22 @@ public class DrinksApplication {
         SpringApplication.run(DrinksApplication.class, args);
     }
 
-    private void insertFourEmployees(EmployeeRepository repository) {
-        repository.save(new Employee("Dalia", "Abo Sheasha"));
-        repository.save(new Employee("Trisha", "Gee"));
-        repository.save(new Employee("Helen", "Scott"));
-        repository.save(new Employee("Mala", "Gupta"));
+//    private void insertFourEmployees(EmployeeRepository repository) {
+//        repository.save(new Employee("Dalia", "Abo Sheasha"));
+//        repository.save(new Employee("Trisha", "Gee"));
+//        repository.save(new Employee("Helen", "Scott"));
+//        repository.save(new Employee("Mala", "Gupta"));
+//    }
+
+    private void deleteAllEmployees (EmployeeRepository repository) {
+        repository.deleteAll();
     }
 
     @Bean
     public CommandLineRunner run(EmployeeRepository repository) {
         return (args) -> {
-            insertFourEmployees(repository);
+//            insertFourEmployees(repository);
+            deleteAllEmployees(repository);
             System.out.println(repository.findAll());
         };
     }
