@@ -1,52 +1,89 @@
 package com.assignment.drinks.controller;
-
-import com.assignment.drinks.model.User;
-import com.assignment.drinks.repository.DrinksRepository;
-import com.assignment.drinks.repository.EmployeeRepository;
+import com.assignment.drinks.model.*;
+import com.assignment.drinks.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @RestController
 public class DrinksController {
 
-    @GetMapping("/home")
-    public ModelAndView getHomePage() {
-        ModelAndView mav = new ModelAndView("home");
-        return mav;
-    }
-
     @Autowired
-    private DrinksRepository drinksRepository;
+    private DrinksService drinksService;
 
-    @GetMapping({"/list", "/"})
-    public ModelAndView getAllUsers() {
-        ModelAndView mav = new ModelAndView("list-employees");
-        mav.addObject("users", drinksRepository.findAll());
-        return mav;
-    }
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage() {
-        ModelAndView mav = new ModelAndView("login");
-        return mav;
+    public List<User> getUsers()
+    {
+        return drinksService.getUsers();
     }
 
-    @RequestMapping(value = "/user/", method = RequestMethod.POST)
-    public ResponseEntity<?> createProduct(@RequestBody User user) {
-//        logger.info("Creating Product : {}", product);
-
-//        if (eRepo.isProductExist(user)) {
-//            logger.error("Unable to create. A Product with name {} already exist", product.getName());
-//            return new ResponseEntity<>(new CustomErrorType("Unable to create. A Product with name " +
-//                    product.getName() + " already exist."), HttpStatus.CONFLICT);
-//        }
-        drinksRepository.saveUser(user);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    @PostMapping("/login/user")
+    public void addUser(@RequestBody User user)
+    {
+        drinksService.addUser(user);
+//        return books.getBookid();
     }
+
+    @GetMapping({"/home","/addBeverage"})
+    public List<Bottle> getBottles()
+    {
+        return drinksService.getBottles();
+    }
+
+    @PostMapping("/addBeverage/bottle")
+    public void addBottle(@RequestBody Bottle bottle)
+    {
+        drinksService.addBottle(bottle);
+    }
+
+    @GetMapping({"/home","/addBeverage"})
+    public List<Crate> getCrates()
+    {
+        return drinksService.getCrates();
+    }
+
+    @PostMapping("/addBeverage/crate")
+    public void addCrate(@RequestBody Crate crate)
+    {
+        drinksService.addCrate(crate);
+    }
+
+    @GetMapping("/orderItems")
+    public List<OrderItem> getOrderItems()
+    {
+        return drinksService.getOrderItems();
+    }
+
+    @PostMapping("/orderItems/orderItem")
+    public void addOrderItem(@RequestBody OrderItem orderItem)
+    {
+        drinksService.addOrderItem(orderItem);
+    }
+
+    @PostMapping("/orderItems/address")
+    public void addAddress(@RequestBody Address address)
+    {
+        drinksService.addAddress(address);
+    }
+
+    @GetMapping("/myOrders")
+    public List<Order> getOrders()
+    {
+        return drinksService.getOrders();
+    }
+
+    @PostMapping("/orderItems/order")
+    public void addOrder(@RequestBody Order order)
+    {
+        drinksService.addOrder(order);
+    }
+
+    @DeleteMapping("/orderItems/")
+    public void deleteOrderItems()
+    {
+        drinksService.deleteOrderItems();
+    }
+
 }

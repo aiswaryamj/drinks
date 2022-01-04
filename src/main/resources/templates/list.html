@@ -28,9 +28,9 @@
 				</thead>
 				<tbody>
 					<tr th:each="user: ${users}">
-						<td th:text="${employee.id}"></td>
-						<td th:text="${employee.firstName}"></td>
-						<td th:text="${employee.lastName}"></td>
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.password}"></td>
+						<td th:text="${user.birthday}"></td>
 					</tr>
 				</tbody>
 				
